@@ -25,12 +25,28 @@ def vekter_bias(rad: int, kol: int, seed: int = None):
     if seed: 
         rng = np.random.default_rng(seed)
         W = rng.random((kol, 1))
-        b = rng.random((rad))
+        b = rng.random((rad, 1))
     else: 
         W = np.random.randn(kol, 1)
-        b = np.random.randn(rad)
+        b = np.random.randn(rad, 1)
     return W, b
 
+def output(X: np.ndarray, W: np.ndarray, b: np.ndarray) -> np.ndarray:
+    """Ganger input med vekter og legger til bias. Kjører gjennom 
+    sigmoidfunksjonen
+
+    Args:
+        X (np.ndarray): Input X. Kan være treningsdata. Shape: (nxp)
+        W (np.ndarray): Vekter. Shape: (px1)
+        b (np.ndarray): Bias. Shape: (nx1)
+
+    Returns:
+        float: y_hat. Shape: (nx1)
+    """
+    z = X @ W + b
+    y_hat = sigmoid(z)
+    return y_hat
+
 def gradients():
-    
-    return dCdW, dCdb
+    pass
+    # return dCdW, dCdb
