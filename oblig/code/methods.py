@@ -20,15 +20,15 @@ def vekter_bias(rad: int, kol: int, seed: int = None):
         seed (int): Seed for reproduserbarhet. Optional
 
     Returns:
-        Vekter W (matrise) og biaser b (vektor)
+        Vekter W (matrise) og biaser b (skalar)
     """
-    if seed: 
+    if seed is not None: 
         rng = np.random.default_rng(seed)
         W = rng.random((kol, 1))
-        b = rng.random((rad, 1))
+        b = rng.random()
     else: 
         W = np.random.randn(kol, 1)
-        b = np.random.randn(rad, 1)
+        b = np.random.randn()
     return W, b
 
 def output(X: np.ndarray, W: np.ndarray, b: np.ndarray) -> np.ndarray:
@@ -62,7 +62,7 @@ def gradients(y: np.ndarray, y_hat: np.ndarray, X: np.ndarray):
     n = np.shape(y)[0]
     delta = - (y-y_hat) / n
     dCdW = X.T @ delta
-    dCdb = np.sum(delta, axis = 1)
+    dCdb = np.sum(delta, axis=0)
     return dCdW, dCdb
 
 def gradient_step(W: np.ndarray, 
@@ -85,4 +85,19 @@ def gradient_step(W: np.ndarray,
     """
     W = W - eta * dCdW
     b = b - eta * dCdb
+    return W, b
+
+def fit_model(X: np.ndarray, 
+              y: np.ndarray, 
+              seed: int = None, 
+              eta: float = 0.01, 
+              n_iters: int=1000):
+    n, p = np.shape(X)
+    W, b = vekter_bias(n, p, seed)
+    
+    for i in range(n_iters):
+        y_hat = output(X, W, b)
+        dW, db = gradients(y, y_hat, X)
+        W, b = gradient_step(W, dW, b, db, eta)
+    
     return W, b
