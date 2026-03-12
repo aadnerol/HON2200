@@ -47,6 +47,20 @@ def output(X: np.ndarray, W: np.ndarray, b: np.ndarray) -> np.ndarray:
     y_hat = sigmoid(z)
     return y_hat
 
-def gradients():
-    pass
-    # return dCdW, dCdb
+def gradients(y: np.ndarray, y_hat: np.ndarray, X: np.ndarray):
+    """Function for computing gradients. 
+
+    Args:
+        y (np.ndarray): y. Shape nx1
+        y_hat (np.ndarray): y_hat (output). Shape nx1
+        X (np.ndarray): X. Shape nxp
+
+    Returns:
+        dCdW: gradient. Shape px1
+        dCdb: gradient. Shape nx1
+    """
+    n = np.shape(y)[0]
+    delta = - (y-y_hat) / n
+    dCdW = X.T @ delta
+    dCdb = np.sum(delta, axis = 1)
+    return dCdW, dCdb
