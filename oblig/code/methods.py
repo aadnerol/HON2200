@@ -31,14 +31,14 @@ def vekter_bias(rad: int, kol: int, seed: int = None):
         b = np.random.randn()
     return W, b
 
-def output(X: np.ndarray, W: np.ndarray, b: np.ndarray) -> np.ndarray:
+def output(X: np.ndarray, W: np.ndarray, b: float) -> np.ndarray:
     """Ganger input med vekter og legger til bias. Kjører gjennom 
     sigmoidfunksjonen
 
     Args:
         X (np.ndarray): Input X. Kan være treningsdata. Shape: (nxp)
         W (np.ndarray): Vekter. Shape: (px1)
-        b (np.ndarray): Bias. Shape: (nx1)
+        b (float): Bias (skalar)
 
     Returns:
         float: y_hat. Shape: (nx1)
@@ -92,12 +92,31 @@ def fit_model(X: np.ndarray,
               seed: int = None, 
               eta: float = 0.01, 
               n_iters: int=1000):
+    """Funksjon for å tilpasse modell med gradient descent. Data blir transformert
+    til riktig type og shape. Printer for hver 10ende prosent i treningsløkka. 
+
+    Args:
+        X (np.ndarray): Designmatrise
+        y (np.ndarray): Respons
+        seed (int, optional): Seed. Defaults to None.
+        eta (float, optional): Læringsrate. Defaults to 0.01.
+        n_iters (int, optional): Antall iterasjoner. Defaults to 1000.
+
+    Returns:
+        W: Vektor med vekter
+        b: bias (skalar)
+    """
+    X = np.asarray(X, dtype=float)
+    y = np.asarray(y, dtype=float).reshape(-1, 1)
     n, p = np.shape(X)
     W, b = vekter_bias(n, p, seed)
+    
+    step = n_iters // 10 
     
     for i in range(n_iters):
         y_hat = output(X, W, b)
         dW, db = gradients(y, y_hat, X)
         W, b = gradient_step(W, dW, b, db, eta)
-    
+        if (i+1) % step == 0:
+            print(f"Fullført {i+1} steg av {n_iters}")
     return W, b
