@@ -64,3 +64,25 @@ def gradients(y: np.ndarray, y_hat: np.ndarray, X: np.ndarray):
     dCdW = X.T @ delta
     dCdb = np.sum(delta, axis = 1)
     return dCdW, dCdb
+
+def gradient_step(W: np.ndarray, 
+                 dCdW: np.ndarray, 
+                 b: np.ndarray, 
+                 dCdb: np.ndarray, 
+                 eta: float = 0.01):
+    """Gjør et steg med gradient descent
+
+    Args:
+        W (np.ndarray): W før steg
+        dCdW (np.ndarray): gradient W
+        b (np.ndarray): b før steg
+        dCdb (np.ndarray): gradient b
+        eta (float, optional): Steglengde. Defaults to 0.01.
+
+    Returns:
+        W: W etter steg
+        b: b etter steg
+    """
+    W = W - eta * dCdW
+    b = b - eta * dCdb
+    return W, b
