@@ -1,7 +1,7 @@
 import numpy as np
 
 def sigmoid(z: float) -> float:
-    """Sigmoid-funksjonen
+    """Sigmoid-funksjonen. Tar høyde for overflow med np.where()
 
     Args:
         z (float): Input
@@ -9,7 +9,7 @@ def sigmoid(z: float) -> float:
     Returns:
         float: Funksjonsverdi
     """
-    return np.exp(z) / (1 + np.exp(z))
+    return np.where (z >= 0, 1 / (1 + np.exp(-z)), np.exp(z) / (1 + np.exp(z)))
 
 def vekter_bias(rad: int, kol: int, seed: int = None):
     """Lager vekter og biaser.
@@ -30,3 +30,7 @@ def vekter_bias(rad: int, kol: int, seed: int = None):
         W = np.random.randn(kol, 1)
         b = np.random.randn(rad)
     return W, b
+
+def gradients():
+    
+    return dCdW, dCdb
