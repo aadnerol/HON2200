@@ -6,4 +6,6 @@ Emnet begynner med en gjennomgang av sentrale konsepter innenfor statistikk, dat
 Hoveddelen av emnet er et tverrfaglig prosjekt forankret i databehandling, der innsamling og analyse av data informerer en etisk og samfunnsvitenskapelig diskusjon. For å svare på utfordringen, vil studenter fra forskjellige studieretninger settes sammen i team.
 
 ## Innhold
-Under mappen oblig finnes kode og løsningsforslag til emnets første oblig, som innebærer en data-analyse av data fra Titanic-forliset.
+Under mappen "oblig" finnes kode og løsningsforslag til emnets første oblig, som innebærer en data-analyse av data fra Titanic-forliset.
+
+Under mappen "prosjekt_COMPAS" finnes kode og løsningsforslag til emnets første prosjekt. Prosjektet går ut på å gjennomføre en "algoritme-revisjon" på COMPAS-algoritmen. 
